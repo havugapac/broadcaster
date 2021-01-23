@@ -1,0 +1,4 @@
+{
+    "jwtPrivateKey":"MysecureKey",
+    "port": 5000
+}

@@ -1,0 +1,36 @@
+const {validate, User} = require('../models/user');
+const auth = require('../middlewares/auth');
+const jwt = require('jsonwebtoken');
+const config = require('config');
+const bcrypt = require('bcrypt');
+const _ = require('lodash');
+const mongoose = require('mongoose');
+const express = require('express');
+const router = express.Router();
+
+
+router.post('/', async (req, res) =>{
+const {error} = validate(req.body);
+
+if(error) return res.status(401).send(error.details[0].message);
+
+let user = await User.findOne({email: req.body.email});
+
+if(user) return res.status(401).send('User already exists');
+
+ user = new User(_.pick(req.body, ['firstName', 'lastName', 'email', 'phoneNumber', 'userName', 'password']));
+const salt = await bcrypt.genSalt(10);
+user.password = await bcrypt.hash(user.password, salt);
+
+await user.save()
+
+const token = user.generateAuthToken();
+
+let msg = '"status:" Integer:201';
+console.log(msg)
+
+res.header('x-auth-token', token).send(_.pick(user, ['firstName', 'email']));
+
+});
+
+module.exports = router;
