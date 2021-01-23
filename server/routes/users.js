@@ -26,9 +26,6 @@ await user.save()
 
 const token = user.generateAuthToken();
 
-let msg = '"status:" Integer:201';
-console.log(msg)
-
 res.header('x-auth-token', token).send(_.pick(user, ['firstName', 'email']));
 
 });

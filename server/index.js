@@ -2,6 +2,7 @@ const express = require('express');
 const mongoose = require('mongoose');
 const config = require('config');
 const users = require('./routes/users');
+const auth = require('./routes/auth');
 
 const app = express();
 
@@ -12,6 +13,7 @@ mongoose.connect('mongodb://localhost/broadcaster')
 
 app.use(express.json());
 app.use('/api/users', users);
+app.use('/api/auth', auth);
 
 if(!config.get('jwtPrivateKey')){
     console.error('FATAL ERROR: jwtPrivateKey is not defined');
