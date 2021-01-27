@@ -25,7 +25,9 @@
     "joi": "^13.1.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
-    "mongoose": "^5.11.13"
+    "mongoose": "^5.11.13",
+    "node-geocoder": "^3.27.0",
+    "path": "^0.12.7"
   },
   "devDependencies": {
     "eslint-config-airbnb-base": "^14.2.1",
