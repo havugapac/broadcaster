@@ -3,5 +3,6 @@
     "port": 5000,
     "GEOCODER_PROVIDER":"mapquest",
     "GEOCODER_API_KEY":"kCcj2ag4tzGsE8hVGDrDwCMXt7Rn2Mzy",
-    "GEOCODER_TUTORIAL":"https://www.youtube.com/watch?v=9FQrFah9rnc&t=2650s"
+    "GEOCODER_TUTORIAL":"https://www.youtube.com/watch?v=9FQrFah9rnc&t=2650s",
+    "SUPPRESS_NO_CONFIG_WARNING":""
 }

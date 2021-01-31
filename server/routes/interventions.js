@@ -42,7 +42,7 @@ router.get('/', async (req, res) => {
 
     if (!interventions) return res.status(404).send('No intervention found.');
   
-    res.send(interventions);
+    res.status(200).send({data: interventions});
 
 });
 

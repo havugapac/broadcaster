@@ -1,6 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('config');
+//const config = require('config');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const redFlags = require('./routes/red_flags');
@@ -27,12 +28,14 @@ app.use('/api/interventions', interventions);
 
 
 
-if(!config.get('jwtPrivateKey')){
+if(!process.env.jwtPrivateKey){
     console.error('FATAL ERROR: jwtPrivateKey is not defined');
     process.exit(1);
 }
 
 
 
-const port = config.get('port') || 3000;
-app.listen(port, () => console.log(`Listening on port ${port} ...`))
+const port = process.env.port || 3000;
+app.listen(port, () => console.log(`Listening on port ${port} ...`));
+
+export default app;

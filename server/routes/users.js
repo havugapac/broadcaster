@@ -1,7 +1,8 @@
+require('dotenv').config();
 const {validate, User} = require('../models/user');
 const auth = require('../middlewares/auth');
 const jwt = require('jsonwebtoken');
-const config = require('config');
+//const config = require('config');
 const bcrypt = require('bcrypt');
 const _ = require('lodash');
 const mongoose = require('mongoose');
