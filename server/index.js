@@ -27,7 +27,6 @@ app.use('/api/interventions', interventions);
 
 
 
-
 if(!process.env.jwtPrivateKey){
     console.error('FATAL ERROR: jwtPrivateKey is not defined');
     process.exit(1);
@@ -38,4 +37,4 @@ if(!process.env.jwtPrivateKey){
 const port = process.env.port || 3000;
 app.listen(port, () => console.log(`Listening on port ${port} ...`));
 
-export default app;
+module.exports = app;

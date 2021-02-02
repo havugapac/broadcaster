@@ -13,6 +13,38 @@
     
 </head>
 <body>
+    <div class="container my-3">
    <h1>Add Redflag</h1> 
+
+   <form id="store-form" class="mb-4" enctype="multipart/form-data" method="POST">
+
+    <div class="form-group">
+     <label for="store-id">StoreId</label>
+     <input type="text" id="store-id" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="store-address">StoreAddress</label>
+        <input type="text" id="store-address" class="form-control">
+    </div>
+
+    <div class="form-group">
+        <label for="store-descr">Description</label>
+        <textarea cols="30" rows="15" id="descr" class="form-control"> </textarea>
+    </div>
+
+    <div class="form-group">
+        <label for="flag-file">File</label>
+        <input type="file" id="flag-file"  name="flagFile" class="form-control">
+    </div>
+
+    <button type="submit" class="btn btn-primary">Submit</button>
+    <a class="btn btn-secondary" href="index.html">Back</a>
+
+   </form>
+
+</div>
+
+<script src="js/add.js"></script>
 </body>
 </html>

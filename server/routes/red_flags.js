@@ -1,4 +1,5 @@
 const Joi = require('joi');
+require('dotenv').config();
 const mongoose = require('mongoose');
 const express = require('express');
 const router = express.Router();
@@ -7,8 +8,13 @@ const {User} = require('../models/user');
 const auth = require('../middlewares/auth');
 const admin = require('../middlewares/admin');
 const {validateput, validatestat} = require('../middlewares/validPuts');
+const multipleUpload = require('../middlewares/files_upload');
+const sgMail = require('@sendgrid/mail');
 
-router.post('/', async (req, res) =>{
+
+router.post('/', multipleUpload, async (req, res) =>{
+
+    console.log(req.files.flagImage[0].path);
 
     const {error} = validate(req.body);
     if(error) return res.status(401).send('Invalid userId or descriptions');
@@ -28,7 +34,9 @@ router.post('/', async (req, res) =>{
         },
         address:req.body.address,        
         descr:req.body.descr,
-        status: ""
+        status: "",
+        flagImage: req.files.flagImage[0].path,
+        flagVideo: req.files.flagVideo[0].path
     });
     
     redFlag = await redFlag.save();
@@ -81,7 +89,46 @@ router.put('/status/:id', [auth, admin], async (req, res) => {
 
     const redFlag = await RedFlag.findByIdAndUpdate(req.params.id, {status: req.body.status}, {new: true});
     res.send(redFlag);
-    
+
+// create reusable transporter object using the default SMTP transport
+//   let transporter = nodemailer.createTransport({
+//     service: 'gmail',
+//     auth: {
+//       user: process.env.email, // generated ethereal user
+//       pass: process.env.pass, // generated ethereal password
+//     },
+//   });
+
+//   // send mail with defined transport object
+//  let mailOptions ={
+//     from: 'process.env.email', // sender address
+//     to: "tunezepatrick@gmail.com", // list of receivers
+//     subject: "Hello ✔", // Subject line
+//     text: "your redflag status has been modified", // plain text body
+//     html: "<b>Hello world?</b>", // html body
+//  }
+
+// transporter.sendMail(mailOptions, function(err, info){
+//     if(err){
+//        console.log('Error:', err)
+//     }
+//     else{
+//         console.log('Email sent...');
+//     }
+// });
+
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const msg = {
+   to: 'havugapac@gmail.com', // list of receivers
+   from: `${process.env.email}`, //sender address
+   subject: "Hello ✔", // Subject line
+   text: "your redflag status has been modified", // plain text body
+   html: "<b>Hello world?</b>", // html body
+};
+sgMail.send(msg)
+.then((response) => console.log('Email sent'))
+.catch((error) => console.log('the send grid error', error));
+ 
 
 });
 

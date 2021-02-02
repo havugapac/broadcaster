@@ -27,6 +27,8 @@ const redFlagSchema = new mongoose.Schema({
 
     descr:{type: String, minlength:10, required:true},
     status:{type:String},
+    flagImage: {type:String, required:true},
+    flagVideo: {type:String, required:true},
     createdOn:{type: Date, required:true, default: Date.now}
     
 });
