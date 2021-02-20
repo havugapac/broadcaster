@@ -85,45 +85,22 @@ router.put('/status/:id', [auth, admin], async (req, res) => {
 
     if(!flag) return res.status(401).send('No red flag Found');
 
+    const mail = flag.user.email;
+
     const address = flag.address;
 
     const redFlag = await RedFlag.findByIdAndUpdate(req.params.id, {status: req.body.status}, {new: true});
     res.send(redFlag);
 
-// create reusable transporter object using the default SMTP transport
-//   let transporter = nodemailer.createTransport({
-//     service: 'gmail',
-//     auth: {
-//       user: process.env.email, // generated ethereal user
-//       pass: process.env.pass, // generated ethereal password
-//     },
-//   });
 
-//   // send mail with defined transport object
-//  let mailOptions ={
-//     from: 'process.env.email', // sender address
-//     to: "tunezepatrick@gmail.com", // list of receivers
-//     subject: "Hello ✔", // Subject line
-//     text: "your redflag status has been modified", // plain text body
-//     html: "<b>Hello world?</b>", // html body
-//  }
-
-// transporter.sendMail(mailOptions, function(err, info){
-//     if(err){
-//        console.log('Error:', err)
-//     }
-//     else{
-//         console.log('Email sent...');
-//     }
-// });
-
+    //email sender
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
 const msg = {
-   to: 'havugapac@gmail.com', // list of receivers
+   to: `${mail}`, // list of receivers
    from: `${process.env.email}`, //sender address
-   subject: "Hello ✔", // Subject line
-   text: "your redflag status has been modified", // plain text body
-   html: "<b>Hello world?</b>", // html body
+   subject: "Eyo Wsup✔", // Subject line
+   text: "your redflag status has been modified plz", // plain text body
+   html: "<b>Holla holaa?</b>", // html body
 };
 sgMail.send(msg)
 .then((response) => console.log('Email sent'))

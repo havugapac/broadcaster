@@ -27,6 +27,8 @@ const interSchema = new mongoose.Schema({
 
     descr:{type: String, minlength:10, required:true},
     status:{type: String},
+    intImage: {type:String, required:true},
+    intVideo: {type:String, required:true},
     createdOn:{type: Date, required:true, default: Date.now}
     
 });

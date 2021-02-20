@@ -7,8 +7,11 @@ const {User} = require('../models/user');
 const auth = require('../middlewares/auth');
 const admin = require('../middlewares/admin');
 const {validatestat, validateput} = require('../middlewares/validPuts');
+const multipleUpload = require('../middlewares/files_upload');
+const sgMail = require('@sendgrid/mail');
 
-router.post('/', async (req, res) =>{
+
+router.post('/', multipleUpload, async (req, res) =>{
 
     const {error} = validate(req.body);
     if(error) return res.status(401).send('Invalid userId or descriptions');
@@ -28,7 +31,9 @@ router.post('/', async (req, res) =>{
         },
         address:req.body.address,
         descr:req.body.descr,
-        status: ''
+        status: '',
+        intImage: req.files.flagImage[0].path,
+        intVideo: req.files.flagVideo[0].path
     });
     
     intervention = await intervention.save();
@@ -79,10 +84,24 @@ router.put('/status/:id', [auth, admin], async (req, res) => {
 
     if(!interve) return res.status(401).send('No intervention Found');
 
+    const mail = interve.user.email;
     const address = interve.address;
 
     const intervention = await Intervention.findByIdAndUpdate(req.params.id, {status: req.body.status}, {new: true});
     res.send(intervention);
+
+//email sender
+sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const msg = {
+   to: `${mail}`, // list of receivers
+   from: `${process.env.email}`, //sender address
+   subject: "Eyo Wsup✔", // Subject line
+   text: "your redflag status has been modified plz", // plain text body
+   html: "<b>Holla holaa?</b>", // html body
+};
+sgMail.send(msg)
+.then((response) => console.log('Email sent'))
+.catch((error) => console.log('the send grid error', error));
     
 
 });
