@@ -1,0 +1,29 @@
+//////////////////////////////////
+npm init --yes
+npm i express
+npm i joi@13.1.0
+npm i mongoose
+npm i config
+npm i bcrypt
+npm i jsonwebtoken
+npm i lodash
+npm i fawn
+npm i -g nodemon
+npm i @sendgrid/mail
+
+////////////////////////////////////////////////
+joi : used to validate inputs / npm i joi
+fawn: used for transactions/ npm i fawn
+lodash: used to return values to user/ npm i lodash
+joi-password-complexity: used to apply strong password
+bcrypt: used to hash password / npm i bcrypt
+jsonwebtoken: used to generate web token/ npm i jsonwebtoken
+config : helps to save confidential information in environment variable / npm i config
+nodemon : helps to run the project and refresh itself as any change happens
+@sendgrid/mail: helps to send emails
+
+/////////////////////////////////////////////
+Deployment
+---------------
+npm i helmet: helmet protects from web vulnerabilities
+npm i compression: helps to compress http response sent to the client
